@@ -1,0 +1,14 @@
+[
+    {
+        "id": 1,
+        "title": "Simple Fetch Request (JavaScript)",
+        "language": "javascript",
+        "code": "async function getData(url) {\n  const response = await fetch(url);\n  if (!response.ok) {\n    throw new Error(`HTTP error! status: ${response.status}`);\n  }\n  return await response.json();\n}\n\ngetData('https://api.example.com/data').then(data => console.log(data));"
+    },
+    {
+        "id": 2,
+        "title": "Basic Flask Route (Python)",
+        "language": "python",
+        "code": "from flask import Flask\n\napp = Flask(__name__)\n\n@app.route('/')\ndef hello_world():\n    return 'Hello, World!'\n\nif __name__ == '__main__':\n    app.run(debug=True)"
+    }
+]
