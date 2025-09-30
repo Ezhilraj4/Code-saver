@@ -1,14 +1,8 @@
 [
     {
         "id": 1,
-        "title": "Simple Fetch Request (JavaScript)",
-        "language": "javascript",
-        "code": "async function getData(url) {\n  const response = await fetch(url);\n  if (!response.ok) {\n    throw new Error(`HTTP error! status: ${response.status}`);\n  }\n  return await response.json();\n}\n\ngetData('https://api.example.com/data').then(data => console.log(data));"
-    },
-    {
-        "id": 2,
-        "title": "Basic Flask Route (Python)",
-        "language": "python",
-        "code": "from flask import Flask\n\napp = Flask(__name__)\n\n@app.route('/')\ndef hello_world():\n    return 'Hello, World!'\n\nif __name__ == '__main__':\n    app.run(debug=True)"
+        "title": "Arduino Clap Switch Code",
+        "language": "cpp", 
+        "code": "int soundSensor = 2;   // Sound sensor OUT pin\nint led = 13;          // LED or relay pin\n\nunsigned long lastClapTime = 0;\nint clapCount = 0;\nbool ledState = false;  // Track LED state\n\nvoid setup() {\n  pinMode(soundSensor, INPUT);\n  pinMode(led, OUTPUT);\n  digitalWrite(led, LOW);\n  Serial.begin(9600);\n}\n\nvoid loop() {\n  int sensorVal = digitalRead(soundSensor);\n\n  if (sensorVal == HIGH) {\n    unsigned long currentTime = millis();\n\n    if (currentTime - lastClapTime < 400) {  \n      // 2nd clap within 400ms → double clap\n      clapCount++;\n    } else {\n      // Reset clap count if gap too large\n      clapCount = 1;\n    }\n\n    lastClapTime = currentTime;\n    delay(50); // debounce\n  }\n\n  // Double clap → Turn ON\n  if (clapCount == 2) {\n    ledState = true;\n    digitalWrite(led, HIGH);\n    clapCount = 0;  // reset\n    Serial.println(\"Double Clap → ON\");\n  }\n\n  // Single clap → OFF (after timeout check)\n  if (clapCount == 1 && (millis() - lastClapTime > 500)) {\n    ledState = false;\n    digitalWrite(led, LOW);\n    clapCount = 0;  // reset\n    Serial.println(\"Single Clap → OFF\");\n  }\n}"
     }
 ]
